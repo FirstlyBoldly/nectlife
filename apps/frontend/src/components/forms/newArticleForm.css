@@ -1,0 +1,26 @@
+.new-article-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-large);
+}
+
+.new-article-form textarea {
+  min-height: 300px;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-large);
+  min-height: fit-content;
+}
+
+.form-subcontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-editor {
+  flex: 1;
+  gap: var(--gap-large);
+}

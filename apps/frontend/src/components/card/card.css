@@ -1,0 +1,16 @@
+.card {
+  max-width: 400px;
+  margin: auto;
+  padding: var(--gap-large);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-large);
+}
+
+.card ul li a {
+  color: var(--info-color);
+}
+
+.card ul li a:active {
+  color: var(--warning-color);
+}

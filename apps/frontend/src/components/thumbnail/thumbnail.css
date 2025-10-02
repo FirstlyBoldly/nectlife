@@ -1,0 +1,8 @@
+.post-link {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.post-link:hover {
+  text-decoration: underline;
+}

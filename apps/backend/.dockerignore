@@ -1,0 +1,6 @@
+# Git/GitHub
+.git/
+.gitignore
+
+# env file
+.env

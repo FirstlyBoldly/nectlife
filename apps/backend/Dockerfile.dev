@@ -1,0 +1,15 @@
+# Development environment settings.
+# DO NOT USE FOR PRODUCTION!
+FROM golang:1.25.1-alpine
+
+WORKDIR /apps/backend
+
+RUN go install github.com/air-verse/air@latest
+RUN go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+RUN go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Refer to ".air.toml" for configuration.
+CMD [ "air", "-c", ".air.toml" ]

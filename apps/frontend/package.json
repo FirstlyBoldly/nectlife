@@ -1,0 +1,32 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "prettier": "npx prettier . --write",
+    "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
+    "openapi-ts": "openapi-ts",
+    "openapi-build-ts": "make -C ../backend gen_docs && openapi-ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@hey-api/openapi-ts": "0.83.1",
+    "@types/dompurify": "^3.0.5",
+    "@types/marked": "^5.0.2",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "3.6.2",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.42.0",
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.6",
+    "marked": "^16.2.1"
+  }
+}

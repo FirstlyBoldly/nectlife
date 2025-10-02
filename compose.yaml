@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:17.5-alpine
+    restart: always
+    env_file:
+      - ".env"
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+  backend:
+    build:
+      context: "./apps/backend"
+      dockerfile: "Dockerfile.dev"
+    tty: true
+    restart: always
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_CONTAINER_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - "./apps/backend:/apps/backend"
+    env_file:
+      - ".env"
+    networks:
+      - frontend
+      - backend
+  frontend:
+    build:
+      context: "./apps/frontend"
+      dockerfile: "Dockerfile.dev"
+    restart: always
+    ports:
+      - "${FRONTEND_HOST_PORT}:${FRONTEND_CONTAINER_PORT}"
+    depends_on:
+      - backend
+    volumes:
+      - "./apps/frontend:/apps/frontend"
+    env_file:
+      - ".env"
+    networks:
+      - frontend
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - backend
+volumes:
+  postgres_data:
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

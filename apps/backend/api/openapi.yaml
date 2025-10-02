@@ -1,0 +1,549 @@
+openapi: 3.1.0
+info:
+    title: NectLife API
+    version: 1.0.0
+paths:
+    /api/v1/auth/login:
+        post:
+            tags:
+                - Auth
+            summary: Login user
+            operationId: login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginInputBody'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LoginOutputBody'
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+    /api/v1/auth/logout:
+        get:
+            tags:
+                - Auth
+            summary: Logout user
+            operationId: logout
+            responses:
+                "204":
+                    description: No Content
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+    /api/v1/auth/register:
+        post:
+            tags:
+                - Auth
+            summary: Register a new user
+            operationId: register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RegisterInputBody'
+                required: true
+            responses:
+                "201":
+                    description: Created
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+    /api/v1/auth/status:
+        get:
+            tags:
+                - Auth
+            summary: Session status
+            description: Returns a boolean indicating if a session is authenticated and the session data
+            operationId: status
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/StatusOutputBody'
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+    /api/v1/users:
+        get:
+            tags:
+                - Users
+            summary: List all existing user instances
+            operationId: list-users
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+        post:
+            tags:
+                - Users
+            summary: Create a new user instance
+            operationId: create-user
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateUserParams'
+                required: true
+            responses:
+                "201":
+                    description: Created
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+    /api/v1/users/{id}:
+        get:
+            tags:
+                - Users
+            summary: Get a user instance by its id
+            operationId: get-user-by-id
+            parameters:
+                - name: id
+                  in: path
+                  description: User ID
+                  required: true
+                  schema:
+                    type: integer
+                    description: User ID
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+        delete:
+            tags:
+                - Users
+            summary: Delete a user instance
+            operationId: delete-user
+            parameters:
+                - name: id
+                  in: path
+                  description: User ID
+                  required: true
+                  schema:
+                    type: integer
+                    description: User ID
+                    format: int32
+            responses:
+                "204":
+                    description: No Content
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+        patch:
+            tags:
+                - Users
+            summary: Update a user instance
+            operationId: update-user
+            parameters:
+                - name: id
+                  in: path
+                  description: User ID to update
+                  required: true
+                  schema:
+                    type: integer
+                    description: User ID to update
+                    format: int32
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserParams'
+                required: true
+            responses:
+                "204":
+                    description: No Content
+                default:
+                    description: Error
+                    content:
+                        application/problem+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorModel'
+components:
+    schemas:
+        CreateUserParams:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/CreateUserParams.json
+                    readOnly: true
+                CourseID:
+                    type: integer
+                    format: int32
+                Email:
+                    type: string
+                FirstName:
+                    type: string
+                LastName:
+                    type: string
+                PasswordHash:
+                    type: string
+                RoleID:
+                    type: integer
+                    format: int32
+                StudentID:
+                    type: string
+            required:
+                - CourseID
+                - RoleID
+                - StudentID
+                - FirstName
+                - LastName
+                - Email
+                - PasswordHash
+        ErrorDetail:
+            type: object
+            additionalProperties: false
+            properties:
+                location:
+                    type: string
+                    description: Where the error occurred, e.g. 'body.items[3].tags' or 'path.thing-id'
+                message:
+                    type: string
+                    description: Error message text
+                value:
+                    description: The value at the given location
+        ErrorModel:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/ErrorModel.json
+                    readOnly: true
+                detail:
+                    type: string
+                    description: A human-readable explanation specific to this occurrence of the problem.
+                    examples:
+                        - Property foo is required but is missing.
+                errors:
+                    type: array
+                    description: Optional list of individual error details
+                    items:
+                        $ref: '#/components/schemas/ErrorDetail'
+                instance:
+                    type: string
+                    description: A URI reference that identifies the specific occurrence of the problem.
+                    format: uri
+                    examples:
+                        - https://example.com/error-log/abc123
+                status:
+                    type: integer
+                    description: HTTP status code
+                    format: int64
+                    examples:
+                        - 400
+                title:
+                    type: string
+                    description: A short, human-readable summary of the problem type. This value should not change between occurrences of the error.
+                    examples:
+                        - Bad Request
+                type:
+                    type: string
+                    description: A URI reference to human-readable documentation for the error.
+                    format: uri
+                    default: about:blank
+                    examples:
+                        - https://example.com/errors/example
+        LoginInputBody:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/LoginInputBody.json
+                    readOnly: true
+                password:
+                    type: string
+                    description: User password
+                student_id:
+                    type: string
+                    description: User student ID
+            required:
+                - student_id
+                - password
+        LoginOutputBody:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/LoginOutputBody.json
+                    readOnly: true
+                ID:
+                    type: integer
+                    format: int32
+            required:
+                - ID
+        RegisterInputBody:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/RegisterInputBody.json
+                    readOnly: true
+                course_id:
+                    type: string
+                    description: User course ID
+                email:
+                    type: string
+                    description: User email address
+                first_name:
+                    type: string
+                    description: User first name
+                last_name:
+                    type: string
+                    description: User last name
+                password:
+                    type: string
+                    description: User password
+                role_id:
+                    type: string
+                    description: User role ID
+                student_id:
+                    type: string
+                    description: User student ID
+            required:
+                - first_name
+                - last_name
+                - role_id
+                - student_id
+                - course_id
+                - email
+                - password
+        StatusOutputBody:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/StatusOutputBody.json
+                    readOnly: true
+                Authenticated:
+                    type: boolean
+                UserID:
+                    type: integer
+                    format: int32
+            required:
+                - Authenticated
+                - UserID
+        Text:
+            type: object
+            additionalProperties: false
+            properties:
+                String:
+                    type: string
+                Valid:
+                    type: boolean
+            required:
+                - String
+                - Valid
+        Timestamptz:
+            type: object
+            additionalProperties: false
+            properties:
+                InfinityModifier:
+                    type: integer
+                    format: int32
+                Time:
+                    type: string
+                    format: date-time
+                Valid:
+                    type: boolean
+            required:
+                - Time
+                - InfinityModifier
+                - Valid
+        UpdateUserParams:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/UpdateUserParams.json
+                    readOnly: true
+                CourseID:
+                    type: integer
+                    format: int32
+                Description:
+                    $ref: '#/components/schemas/Text'
+                DisplayName:
+                    $ref: '#/components/schemas/Text'
+                Email:
+                    type: string
+                FirstName:
+                    type: string
+                Headline:
+                    $ref: '#/components/schemas/Text'
+                ID:
+                    type: integer
+                    format: int32
+                LastName:
+                    type: string
+                MiddleName:
+                    $ref: '#/components/schemas/Text'
+                PasswordHash:
+                    type: string
+                RoleID:
+                    type: integer
+                    format: int32
+                Status:
+                    type: string
+                StudentID:
+                    type: string
+            required:
+                - ID
+                - CourseID
+                - RoleID
+                - StudentID
+                - FirstName
+                - MiddleName
+                - LastName
+                - DisplayName
+                - Headline
+                - Description
+                - Email
+                - PasswordHash
+                - Status
+        User:
+            type: object
+            additionalProperties: false
+            properties:
+                $schema:
+                    type: string
+                    description: A URL to the JSON Schema for this object.
+                    format: uri
+                    examples:
+                        - https://example.com/schemas/User.json
+                    readOnly: true
+                CourseID:
+                    type: integer
+                    format: int32
+                CreatedAt:
+                    $ref: '#/components/schemas/Timestamptz'
+                DeletedAt:
+                    $ref: '#/components/schemas/Timestamptz'
+                Description:
+                    $ref: '#/components/schemas/Text'
+                DisplayName:
+                    $ref: '#/components/schemas/Text'
+                Email:
+                    type: string
+                FirstName:
+                    type: string
+                Headline:
+                    $ref: '#/components/schemas/Text'
+                ID:
+                    type: integer
+                    format: int32
+                LastName:
+                    type: string
+                MiddleName:
+                    $ref: '#/components/schemas/Text'
+                PasswordHash:
+                    type: string
+                RoleID:
+                    type: integer
+                    format: int32
+                Status:
+                    type: string
+                StudentID:
+                    type: string
+            required:
+                - ID
+                - CourseID
+                - RoleID
+                - StudentID
+                - FirstName
+                - MiddleName
+                - LastName
+                - DisplayName
+                - Headline
+                - Description
+                - Email
+                - PasswordHash
+                - Status
+                - CreatedAt
+                - DeletedAt
+    securitySchemes:
+        SessionCookie:
+            type: apiKey
+            description: Session cookie
+            name: sess_tkn
+            in: cookie
+security:
+    - SessionCookie: []

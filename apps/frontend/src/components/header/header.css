@@ -1,0 +1,115 @@
+.header,
+.header ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header {
+  background-color: var(--primary-color);
+  border-bottom: 4px solid var(--dark-color);
+  justify-content: space-between;
+  gap: 32px;
+  padding: 8px 16px;
+}
+
+.header ul {
+  justify-content: flex-end;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header ul li a {
+  font-size: 1.5rem;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.header ul li a:hover {
+  text-decoration: underline;
+}
+
+#logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+#logo-image {
+  width: 2rem;
+  height: 2rem;
+  filter: drop-shadow(4px 4px rgba(0, 0, 0, 0.8));
+}
+
+#logo-text {
+  font-size: 1.5rem;
+  color: var(--dark-color);
+}
+
+#search-bar-form {
+  flex: 1;
+}
+
+#search-bar-container {
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+}
+
+#search-input,
+#search-button {
+  background-color: var(--white-color);
+  color: var(--dark-color);
+  font-weight: bolder;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 2px 2px var(--dark-color);
+}
+
+#search-input {
+  width: 100%;
+  padding-left: 4px;
+  border-top: 2px solid var(--dark-color);
+  border-right: 2px solid var(--dark-color);
+  border-bottom: 2px solid var(--dark-color);
+}
+
+#search-button {
+  padding: 0 12px;
+  color: var(--primary-color);
+  font-weight: 900;
+  background-color: var(--secondary-color);
+  border-top: 2px solid var(--dark-color);
+  border-bottom: 2px solid var(--dark-color);
+  border-left: 2px solid var(--dark-color);
+  transition: background-color 0.1s ease;
+}
+
+#search-button:focus {
+  z-index: 9999;
+}
+
+#search-button:hover, #search-button:focus {
+  cursor: pointer;
+  background-color: color-mix(
+    in srgb,
+    var(--secondary-color) 75%,
+    var(--dark-color)
+  );
+}
+
+#search-button:active,
+#search-button:active + #search-input {
+  box-shadow: none;
+  transform: translate(1px, 1px);
+}
+
+@media screen and (width <= 768px) {
+  #logo-text {
+    display: none;
+  }
+}

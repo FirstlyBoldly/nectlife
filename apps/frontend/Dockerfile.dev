@@ -1,0 +1,9 @@
+FROM node:lts-bookworm-slim
+
+WORKDIR /apps/frontend
+
+COPY package.json ./
+
+RUN npm install
+
+CMD ["npm", "run", "dev"]

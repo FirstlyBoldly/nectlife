@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS "media"
+DROP COLUMN IF EXISTS "file_url";

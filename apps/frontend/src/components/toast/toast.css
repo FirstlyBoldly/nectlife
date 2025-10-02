@@ -1,0 +1,30 @@
+.toast-initial-state {
+  opacity: 0;
+  transform: translateY(calc(var(--header-distance) * -1));
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.toast-transition-state {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-remove-state {
+  opacity: 0;
+  transform: translateY(calc(var(--header-distance) * -1));
+}
+
+.toast {
+  z-index: 9999;
+  position: absolute;
+  top: calc(var(--header-distance) * 0.85);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--gap-normal);
+}
+
+.toast.theme-warning {
+  box-shadow: var(--border-size-large) var(--border-size-large)
+    var(--warning-color);
+}

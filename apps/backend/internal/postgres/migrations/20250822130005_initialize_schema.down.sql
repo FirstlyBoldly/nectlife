@@ -1,0 +1,51 @@
+DROP TRIGGER IF EXISTS cascade_soft_delete_user_trigger ON "user";
+DROP FUNCTION IF EXISTS cascade_soft_delete_user();
+
+DROP VIEW IF EXISTS "active_article_author";
+DROP VIEW IF EXISTS "active_comment";
+DROP VIEW IF EXISTS "active_article";
+DROP VIEW IF EXISTS "inactive_user";
+DROP VIEW IF EXISTS "active_user";
+DROP VIEW IF EXISTS "inactive_session";
+DROP VIEW IF EXISTS "active_session";
+
+DROP TABLE IF EXISTS "session" CASCADE;
+DROP TABLE IF EXISTS "user_event" CASCADE;
+DROP TABLE IF EXISTS "team_event" CASCADE;
+DROP TABLE IF EXISTS "event" CASCADE;
+DROP TABLE IF EXISTS "user_team" CASCADE;
+DROP TABLE IF EXISTS "team_article" CASCADE;
+DROP TABLE IF EXISTS "team" CASCADE;
+DROP TABLE IF EXISTS "reaction" CASCADE;
+DROP TABLE IF EXISTS "reaction_type" CASCADE;
+DROP TABLE IF EXISTS "comment" CASCADE;
+DROP TABLE IF EXISTS "article_author" CASCADE;
+DROP TABLE IF EXISTS "article" CASCADE;
+DROP TABLE IF EXISTS "role_permission" CASCADE;
+DROP TABLE IF EXISTS "permission_translation" CASCADE;
+DROP TABLE IF EXISTS "permission" CASCADE;
+DROP TABLE IF EXISTS "role_translation" CASCADE;
+DROP TABLE IF EXISTS "role" CASCADE;
+DROP TABLE IF EXISTS "object_media" CASCADE;
+DROP TABLE IF EXISTS "media" CASCADE;
+DROP TABLE IF EXISTS "external_site" CASCADE;
+DROP TABLE IF EXISTS "user_programming_skill" CASCADE;
+DROP TABLE IF EXISTS "programming_skill" CASCADE;
+DROP TABLE IF EXISTS "user" CASCADE;
+DROP TABLE IF EXISTS "course_translation" CASCADE;
+DROP TABLE IF EXISTS "course" CASCADE;
+DROP TABLE IF EXISTS "department_translation" CASCADE;
+DROP TABLE IF EXISTS "department" CASCADE;
+DROP TABLE IF EXISTS "faculty_translation" CASCADE;
+DROP TABLE IF EXISTS "faculty" CASCADE;
+DROP TABLE IF EXISTS "object_tag" CASCADE;
+DROP TABLE IF EXISTS "tag_type" CASCADE;
+
+DROP TYPE IF EXISTS "participation_status";
+DROP TYPE IF EXISTS "agent_type";
+DROP TYPE IF EXISTS "taggable_type";
+DROP TYPE IF EXISTS "interactive_type";
+DROP TYPE IF EXISTS "mediable_type";
+DROP TYPE IF EXISTS "user_status";
+
+DROP EXTENSION IF EXISTS hstore CASCADE;

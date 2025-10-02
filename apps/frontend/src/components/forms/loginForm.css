@@ -1,0 +1,6 @@
+.login-form {
+  padding: var(--gap-large);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-extra-large);
+}
