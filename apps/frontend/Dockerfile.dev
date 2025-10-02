@@ -2,8 +2,10 @@ FROM node:lts-bookworm-slim
 
 WORKDIR /apps/frontend
 
-COPY package.json ./
+COPY package.json package-lock.json ./
 
 RUN npm install
+
+COPY . .
 
 CMD ["npm", "run", "dev"]
